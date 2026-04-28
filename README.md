@@ -14,70 +14,76 @@ You are required to help the manager to predict the right group of the new custo
 Include the neural network model diagram.
 
 ## DESIGN STEPS
-### STEP 1: 
+### STEP 1:
+Load the dataset, remove irrelevant columns (ID), handle missing values, encode categorical features using Label Encoding, and encode the target class (Segmentation).
 
-Write your own steps
+### STEP 2:
+Split the dataset into training and testing sets, then normalize the input features using StandardScaler for better neural network performance.
 
-### STEP 2: 
+### STEP 3:
+Convert the scaled training and testing data into PyTorch tensors and create DataLoader objects for batch-wise training and evaluation.
 
+### STEP 4:
+Design a feedforward neural network with multiple fully connected layers and ReLU activation functions, ending with an output layer for multi-class classification.
 
+### STEP 5:
+Train the model using CrossEntropyLoss and Adam optimizer by performing forward propagation, loss calculation, backpropagation, and weight updates over multiple epochs.
 
-### STEP 3: 
-
-
-
-### STEP 4: 
-
-
-
-### STEP 5: 
-
-
-
-### STEP 6: 
-
-
-
-
+### STEP 6:
+Evaluate the trained model on test data using accuracy, confusion matrix, and classification report, and perform prediction on a sample input.
 
 ## PROGRAM
 
-### Name:
+### Name:Thamizharasi G
 
-### Register Number:
+### Register Number:212224100059
 
 ```python
 class PeopleClassifier(nn.Module):
-    def __init__(self, input_size):
+    def __init__(self, input_size): 
         super(PeopleClassifier, self).__init__()
-        #Include your code here
-
-
+        self.fc1 = nn.Linear(input_size, 32)
+        self.fc2 = nn.Linear(32,16)
+        self.fc3 = nn.Linear(16,8)
+        self.fc4 = nn.Linear(8,4) 
 
     def forward(self, x):
-        #Include your code here
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = F.relu(self.fc3(x))
+        x = self.fc4(x)
+        return x
+
         
 # Initialize the Model, Loss Function, and Optimizer
 
 def train_model(model, train_loader, criterion, optimizer, epochs):
-    #Include your code here
-
+    model.train()
+    for epoch in range(epochs):
+        for inputs, labels in train_loader:
+          optimizer.zero_grad()
+          outputs = model(inputs)
+          loss = criterion(outputs, labels)
+          loss.backward()
+          optimizer.step()
+    if (epoch + 1) % 10 == 0:
+        print(f'Epoch [{epoch+1}/{epochs}], Loss: {loss.item():.4f}')
 ```
 
 ### Dataset Information
-Include screenshot of the dataset.
+<img width="1219" height="195" alt="image" src="https://github.com/user-attachments/assets/b31d12e3-1cf6-4a15-91bd-3b33478f95a0" />
 
 ### OUTPUT
+<img width="323" height="42" alt="image" src="https://github.com/user-attachments/assets/298c4031-0db3-4261-b48e-5a7ae8ce6fe9" />
 
 ## Confusion Matrix
-
-Include confusion matrix here
+<img width="675" height="569" alt="image" src="https://github.com/user-attachments/assets/37f79006-6336-4aa3-8f69-56847b333cc3" />
 
 ## Classification Report
-Include classification report here
+<img width="557" height="434" alt="image" src="https://github.com/user-attachments/assets/4b02275d-843c-40fc-bbbe-d21e382571fe" />
 
 ### New Sample Data Prediction
-Include your sample input and output here
+<img width="361" height="102" alt="image" src="https://github.com/user-attachments/assets/008f53e7-f46f-48a2-8ebc-7f9b55476df5" />
 
 ## RESULT
-Include your result here
+Neural network classification model for the given dataset is successfully developed.
